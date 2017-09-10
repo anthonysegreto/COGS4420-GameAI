@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2A4604D5-74A9-CFD2-B736-1A3B08D30520}</ProjectGuid>
+    <ProjectGuid>{2489ADB7-3687-D641-F621-76D8E3A87D4B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -51,6 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Dot.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Ghost.cs" />
      <Compile Include="Assets\Scripts\Maze.cs" />
      <Compile Include="Assets\Scripts\Pacman.cs" />
      <Compile Include="Assets\Scripts\PerfectCamera.cs" />

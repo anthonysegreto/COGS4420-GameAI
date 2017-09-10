@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pacman : MonoBehaviour {
-	float speed = 0.1f;
+	float speed = 0.12f;
 	Vector2 dest = Vector2.zero;
 	Vector2 dir = Vector2.zero;
 	Vector2 newDir = Vector2.zero;
@@ -16,7 +16,7 @@ public class Pacman : MonoBehaviour {
 	bool CanMove(Vector2 dir) {
 		Vector2 pos = transform.position;
 		RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
-		return (hit.collider == GetComponent<Collider2D>());
+		return hit.collider.name.Contains("Dot") || (hit.collider == GetComponent<Collider2D>());
 	}
 
 	void UpdateOrientation(Vector2 dir) {
@@ -38,7 +38,6 @@ public class Pacman : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
 	void FixedUpdate () {
 		if (Input.GetKey(KeyCode.UpArrow)) {
 			newDir = Vector2.up;

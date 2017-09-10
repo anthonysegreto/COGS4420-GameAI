@@ -4,7 +4,14 @@ using System.Linq;
 using UnityEngine;
 
 public class Maze : MonoBehaviour {
+    public static int height = 0;
+    public static int width = 0;
 	public string path;
+    public GameObject Pacman;
+    public GameObject Blinky;
+    public GameObject Pinky;
+    public GameObject Inky;
+    public GameObject Clyde;
 	public GameObject wall;
 	public GameObject dot;
     public GameObject upleft;
@@ -30,6 +37,7 @@ public class Maze : MonoBehaviour {
 	void CreateMaze() {
 		string[] text = System.IO.File.ReadAllLines(@path).Select(l => l.Trim()).ToArray();
 		Debug.Log("Reading " + text[0].Length + "x" + text.Length + " array.");
+        height = text[0].Length; width = text.Length;
 
 		//for (int y = text.Length-1; y >= 0; y--) {
         for(int y = 0; y < text.Length; y++) {
@@ -116,60 +124,60 @@ public class Maze : MonoBehaviour {
                     }
                     if (text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y][x + 1] == '#' && text[y+1][x+1] == '#' && text[y+1][x-1] == '#' && text[y-1][x+1] == '#' && text[y-1][x-1] == '#')
                     {
-                        Instantiate(wall, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
+                        //Instantiate(wall, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if(text[y][x+1] == '#' && text[y+1][x] == '#' && text[y-1][x] == 'o' && text[y][x-1] == 'o')
+                    if(text[y][x+1] == '#' && text[y+1][x] == '#' && text[y-1][x] != '#' && text[y][x-1] != '#')
                     {
                         Instantiate(biguleft, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x + 1] == '#' && text[y - 1][x] == '#' && text[y + 1][x] == 'o' && text[y][x - 1] == 'o')
+                    if (text[y][x + 1] == '#' && text[y - 1][x] == '#' && text[y + 1][x] != '#' && text[y][x - 1] != '#')
                     {
                         Instantiate(bigbleft, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x - 1] == '#' && text[y - 1][x] == '#' && text[y + 1][x] == 'o' && text[y][x + 1] == 'o')
+                    if (text[y][x - 1] == '#' && text[y - 1][x] == '#' && text[y + 1][x] != '#' && text[y][x + 1] != '#')
                     {
                         Instantiate(bigbright, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y-1][x+1] == 'o')
+                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y-1][x+1] != '#')
                     {
                         Instantiate(bleft, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y - 1][x - 1] == 'o')
+                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y - 1][x - 1] != '#')
                     {
                         Instantiate(bright, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y + 1][x - 1] == 'o')
+                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y + 1][x - 1] != '#')
                     {
                         Instantiate(uright, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y + 1][x + 1] == 'o')
+                    if (text[y][x + 1] == '#' && text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y + 1][x + 1] != '#')
                     {
                         Instantiate(uleft, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y+1][x] == '#' && text[y-1][x] == '#' && text[y][x-1] == 'o' && text[y][x+1] == '#')
+                    if (text[y+1][x] == '#' && text[y-1][x] == '#' && text[y][x-1] != '#' && text[y][x+1] == '#')
                     {
                         Instantiate(vert, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y][x + 1] == 'o')
+                    if (text[y + 1][x] == '#' && text[y - 1][x] == '#' && text[y][x - 1] == '#' && text[y][x + 1] != '#')
                     {
                         Instantiate(vertr, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x+1] == '#' && text[y][x-1] == '#' && text[y-1][x] == 'o' && text[y+1][x] == '#')
+                    if (text[y][x+1] == '#' && text[y][x-1] == '#' && text[y-1][x] != '#' && text[y+1][x] == '#')
                     {
                         Instantiate(hori, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
                     }
-                    if (text[y][x + 1] == '#' && text[y][x - 1] == '#' && text[y - 1][x] == '#' && text[y + 1][x] == 'o')
+                    if (text[y][x + 1] == '#' && text[y][x - 1] == '#' && text[y - 1][x] == '#' && text[y + 1][x] != '#')
                     {
                         Instantiate(horizontal, new Vector3(x - 14, text.Length - y - 16, 0), Quaternion.identity);
                         continue;
@@ -183,6 +191,21 @@ public class Maze : MonoBehaviour {
 				else if (text[y][x] == 'o') {
 					Instantiate(dot, new Vector3(x-14, text.Length-y-16, 0), Quaternion.identity);
 				}
+                else if (text[y][x] == '!') {
+                    Instantiate(Pacman, new Vector3(x-14, text.Length-y-16, 0), Quaternion.identity);
+                }
+                else if (text[y][x] == 'B') {
+                    Instantiate(Blinky, new Vector3(x-14, text.Length-y-16, 0), Quaternion.identity);
+                }
+                else if (text[y][x] == 'P') {
+                    Instantiate(Pinky, new Vector3(x-14, text.Length-y-16, 0), Quaternion.identity);
+                }
+                else if (text[y][x] == 'I') {
+                    Instantiate(Inky, new Vector3(x-14, text.Length-y-16, 0), Quaternion.identity);
+                }
+                else if (text[y][x] == 'C') {
+                    Instantiate(Clyde, new Vector3(x-14, text.Length-y-16, 0), Quaternion.identity);
+                }
 			}
 		}
 	}
